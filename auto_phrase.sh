@@ -1,7 +1,7 @@
 #!/bin/bash
-MODEL=${MODEL:- "models/DBLP"}
+MODEL=${MODEL:- "models/Paper"}
 # RAW_TRAIN is the input of AutoPhrase, where each line is a single document.
-RAW_TRAIN=${RAW_TRAIN:- data/DBLP.txt}
+RAW_TRAIN=${RAW_TRAIN:- data/Paper/paper_sampled.txt}
 # When FIRST_RUN is set to 1, AutoPhrase will run all preprocessing. 
 # Otherwise, AutoPhrase directly starts from the current preprocessed data in the tmp/ folder.
 FIRST_RUN=${FIRST_RUN:- 1}
@@ -11,7 +11,7 @@ ENABLE_POS_TAGGING=${ENABLE_POS_TAGGING:- 1}
 # A hard threshold of raw frequency is specified for frequent phrase mining, which will generate a candidate set.
 MIN_SUP=${MIN_SUP:- 10}
 # You can also specify how many threads can be used for AutoPhrase
-THREAD=${THREAD:- 10}
+THREAD=${THREAD:- 64}
 
 ### Begin: Suggested Parameters ###
 MAX_POSITIVES=-1
@@ -58,7 +58,7 @@ TOKENIZED_ALL=tmp/tokenized_all.txt
 TOKENIZED_QUALITY=tmp/tokenized_quality.txt
 STOPWORDS=data/$LANGUAGE/stopwords.txt
 ALL_WIKI_ENTITIES=data/$LANGUAGE/wiki_all.txt
-QUALITY_WIKI_ENTITIES=data/$LANGUAGE/wiki_quality.txt
+QUALITY_WIKI_ENTITIES=data/$LANGUAGE/wiki_quality_and_paper.txt
 LABEL_FILE=tmp/labels.txt
 if [ $FIRST_RUN -eq 1 ]; then
     echo -ne "Current step: Tokenizing stopword file...\033[0K\r"
@@ -90,7 +90,7 @@ fi
 echo ${green}===AutoPhrasing===${reset}
 
 if [ $ENABLE_POS_TAGGING -eq 1 ]; then
-    time ./bin/segphrase_train \
+    time  ./bin/segphrase_train \
         --pos_tag \
         --thread $THREAD \
         --pos_prune data/BAD_POS_TAGS.txt \

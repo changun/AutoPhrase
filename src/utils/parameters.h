@@ -4,7 +4,7 @@
 #include "../utils/utils.h"
 
 // [NOTE!!] If you have a really large input, please uncomment the following define.
-// #define LARGE
+#define LARGE
 
 #ifdef LARGE
     typedef long long TOTAL_TOKENS_TYPE;
@@ -45,7 +45,7 @@ bool ENABLE_POS_PRUNE = false;
 string NO_EXPANSION_POS_FILENAME = "";
 double DISCARD = 0.05;
 string LABEL_FILE = "";
-bool INTERMEDIATE = false;
+bool INTERMEDIATE = true;
 string LABEL_METHOD = "DPDN"; // EPEN, EPDN, DPDN
 
 string SEGMENTATION_MODEL = "";

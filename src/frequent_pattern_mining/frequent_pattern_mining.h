@@ -154,7 +154,7 @@ namespace FrequentPatternMining
 
     vector<bool> noExpansion, noInitial;
 
-    inline bool pruneByPOSTag(int st, int ed) {
+    inline bool pruneByPOSTag(long long st, long long ed) {
         if (ENABLE_POS_PRUNE) {
             POS_ID_TYPE lastPos = Documents::posTags[ed];
             if (st == ed && noInitial[lastPos] && noExpansion[lastPos]) {
